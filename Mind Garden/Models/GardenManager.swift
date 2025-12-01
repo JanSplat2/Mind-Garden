@@ -6,24 +6,31 @@
 //
 
 import SwiftUI
-import Observation
 
 @Observable
 class GardenManager {
     var plants: [Plant] = []
+    var selectedPlant: Plant? = nil
     
-    func addPlant(for emotion: Emotion) {
-        var newPlant = Plant(emotion: emotion)
-        newPlant.growth = 0.2
-        plants.append(newPlant)
-        grow(plantID: newPlant.id)
+    func addPlant(_ emotion: Emotion) {
+        var plant = Plant(emotion: emotion)
+        plant.x = CGFloat.random(in: 200...700)
+        plant.y = CGFloat.random(in: 200...550)
+        plants.append(plant)
     }
     
-    func grow(plantID: UUID) {
-        if let index = plants.firstIndex(where: { $0.id == plantID }) {
-            withAnimation(.easeInOut(duration: 1.2)) {
-                plants[index].growth = min(plants[index].growth + 0.5, 1.0)
-            }
+    func water(_ plant: Plant) {
+        guard let index = plants.firstIndex(where: { $0.id == plant.id }) else { return }
+        
+        withAnimation(.easeInOut(duration: 0.4)) {
+            plants[index].growth = min(plants[index].growth + 0.25, 1.0)
         }
+        
+        if plants[index].growth >= 1.0 && plants[index].stage < 4 {
+            plants[index].stage += 1
+            plants[index].growth = 0.35
+        }
+        
+        plants[index].lastWatered = Date()
     }
 }

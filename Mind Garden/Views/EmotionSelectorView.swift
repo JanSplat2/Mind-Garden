@@ -8,45 +8,37 @@
 import SwiftUI
 
 struct EmotionSelectorView: View {
-    var manager: GardenManager
-    @Binding var showSelector: Bool
+    @Bindable var garden: GardenManager
+    @Binding var showEmotionPicker: Bool
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("How are you feeling today?")
-                .font(.title3.bold())
-                .padding()
             
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
+            Text("How are you feeling?")
+                .font(.title.bold())
+            
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], spacing: 16) {
                 ForEach(Emotion.allCases) { emotion in
                     Button {
-                        manager.addPlant(for: emotion)
-                        withAnimation(.easeInOut) {
-                            showSelector = false
-                        }
+                        garden.addPlant(emotion)
+                        showEmotionPicker = false
                     } label: {
                         VStack {
                             Text(emotion.emoji)
-                                .font(.system(size: 36))
+                                .font(.system(size: 45))
                             Text(emotion.rawValue.capitalized)
-                                .font(.caption)
                                 .foregroundStyle(emotion.color)
                         }
-                        .padding()
+                        .frame(width: 110, height: 110)
                         .background(.thinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
                     }
                 }
             }
+            
+            Button("Close") { showEmotionPicker = false }
+                .padding(.top, 8)
         }
         .padding()
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 25))
-        .shadow(radius: 8)
-        .padding()
     }
-}
-
-#Preview {
-    EmotionSelectorView(manager: GardenManager(), showSelector: .constant(true))
 }

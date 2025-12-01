@@ -7,9 +7,15 @@
 
 import SwiftUI
 
-struct Plant: Identifiable {
+struct Plant: Identifiable, Hashable {
     let id = UUID()
     let emotion: Emotion
-    var growth: Double = 0.2  // from 0.0 to 1.0
-    var date: Date = .now
+    
+    var growth: Double = 0.3
+    var stage: Int = 1
+    var lastWatered = Date()
+    
+    var x: CGFloat = CGFloat.random(in: 200...700)
+    var y: CGFloat = CGFloat.random(in: 200...550)
 }
+

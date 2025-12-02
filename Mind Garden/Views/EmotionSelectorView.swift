@@ -13,7 +13,6 @@ struct EmotionSelectorView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            
             Text("How are you feeling?")
                 .font(.title.bold())
             
@@ -36,8 +35,10 @@ struct EmotionSelectorView: View {
                 }
             }
             
-            Button("Close") { showEmotionPicker = false }
-                .padding(.top, 8)
+            Button("Close") {
+                showEmotionPicker = false
+            }
+            .padding(.top, 8)
         }
         .padding()
     }

@@ -9,14 +9,30 @@ import SwiftUI
 
 struct GardenView: View {
     @Bindable var garden: GardenManager
+    @Binding var showGarden: Bool
     
     var body: some View {
-        ZStack {
-            LinearGradient(colors: [.green.opacity(0.35), .cyan.opacity(0.25)],
+        ZStack(alignment: .topLeading) {
+            
+            // Background
+            LinearGradient(colors: [.green.opacity(0.4), .cyan.opacity(0.2)],
                            startPoint: .top,
                            endPoint: .bottom)
             .ignoresSafeArea()
             
+            // Escape Button
+            Button {
+                showGarden = false
+            } label: {
+                Label("Back", systemImage: "arrow.left.circle.fill")
+                    .font(.title3)
+                    .padding(10)
+                    .background(.regularMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .padding()
+            }
+            
+            // Plants
             if garden.plants.isEmpty {
                 ContentUnavailableView("No Plants", systemImage: "leaf")
             } else {

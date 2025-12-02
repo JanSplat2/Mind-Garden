@@ -11,15 +11,34 @@ struct ContentView: View {
     @State private var garden = GardenManager()
     @State private var showEmotionPicker = false
     
+    @State private var showGarden = false
+    @State private var showReflection = false
+    
     var body: some View {
-        NavigationSplitView {
-            SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
-        } detail: {
-            GardenView(garden: garden)
+        NavigationStack {
+            if showGarden {
+                NavigationStack {
+                    NavigationSplitView {
+                        SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
+                    } detail: {
+                        GardenView(garden: garden,
+                                   showGarden: $showGarden)   // ← added binding
+                    }
+                    .sheet(isPresented: $showEmotionPicker) {
+                        EmotionSelectorView(garden: garden, showEmotionPicker: $showEmotionPicker)
+                    }
+                    .navigationTitle("Mind Garden 🌱")
+                }
+            } else if showReflection {
+    NavigationStack {
+        ReflectionView(garden: garden,
+                       showReflection: $showReflection) // ← NEW
+            .navigationTitle("Reflection ✨")
         }
-        .sheet(isPresented: $showEmotionPicker) {
-            EmotionSelectorView(garden: garden, showEmotionPicker: $showEmotionPicker)
-                .presentationDetents([.medium, .large])
+            } else {
+                // 🏠 START SCREEN
+                StartView(showGarden: $showGarden, showReflection: $showReflection)
+            }
         }
     }
 }

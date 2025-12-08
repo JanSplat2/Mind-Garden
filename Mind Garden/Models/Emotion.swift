@@ -14,12 +14,12 @@ enum Emotion: String, CaseIterable, Identifiable, Hashable {
     
     var color: Color {
         switch self {
-        case .joy: return .orange
+        case .joy: return .yellow
         case .calm: return .blue
         case .love: return .pink
         case .sadness: return .gray
         case .anger: return .red
-        case .anxiety: return .indigo
+        case .anxiety: return .purple
         case .gratitude: return .green
         }
     }
@@ -35,4 +35,9 @@ enum Emotion: String, CaseIterable, Identifiable, Hashable {
         case .gratitude: return "🌻"
         }
     }
+}
+
+// Needed for Reflection Charts
+extension Emotion {
+    var type: String { rawValue }
 }

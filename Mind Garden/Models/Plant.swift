@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct Plant: Identifiable, Hashable {
+    
+    var createdAt: Date = Date()
+    
     let id = UUID()
     let emotion: Emotion
     

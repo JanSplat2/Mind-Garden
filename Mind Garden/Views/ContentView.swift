@@ -5,9 +5,16 @@
 //  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
+//
+// ContentView.swift
+// Mind Garden
+//
+
 import SwiftUI
 
 struct ContentView: View {
+    
+    // MARK: - App State (iOS 17+ Observable System)
     @State private var garden = GardenManager()
     @State private var showEmotionPicker = false
     
@@ -16,27 +23,31 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
+            
+            // MARK: - GARDEN SCREEN
             if showGarden {
-                NavigationStack {
-                    NavigationSplitView {
-                        SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
-                    } detail: {
-                        GardenView(garden: garden,
-                                   showGarden: $showGarden)   // ← added binding
-                    }
-                    .sheet(isPresented: $showEmotionPicker) {
-                        EmotionSelectorView(garden: garden, showEmotionPicker: $showEmotionPicker)
-                    }
-                    .navigationTitle("Mind Garden 🌱")
+                NavigationSplitView {
+                    SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
+                } detail: {
+                    GardenView(garden: garden, showGarden: $showGarden)
                 }
+                .sheet(isPresented: $showEmotionPicker) {
+                    EmotionSelectorView(garden: garden,
+                                        showEmotionPicker: $showEmotionPicker)
+                    .frame(width: 450, height: 420)
+                }
+                .navigationTitle("Mind Garden 🌱")
+                
+                // MARK: - REFLECTION SCREEN
             } else if showReflection {
-    NavigationStack {
-        ReflectionView(garden: garden,
-                       showReflection: $showReflection) // ← NEW
-            .navigationTitle("Reflection ✨")
-        }
+                // pass a closure to set the flag back to false when user taps back
+                ReflectionView(garden: garden) {
+                    showReflection = false
+                }
+                .navigationTitle("Reflection ✨")
+                
+                // MARK: - START SCREEN
             } else {
-                // 🏠 START SCREEN
                 StartView(showGarden: $showGarden, showReflection: $showReflection)
             }
         }

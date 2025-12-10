@@ -18,7 +18,7 @@ struct SidebarView: View {
                     ContentUnavailableView(
                         "No plants yet",
                         systemImage: "leaf",
-                        description: Text("Add an emotion to grow your first plant.")
+                        description: Text("Add an emotion to grow your first plant.To do so, please press the + button in the top right corner in this darker window.")
                     )
                 }
                 

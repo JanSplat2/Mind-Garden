@@ -21,20 +21,26 @@ struct GardenView: View {
             .ignoresSafeArea()
             
             // Escape Button
-            Button {
-                showGarden = false
-            } label: {
-                Label("Back", systemImage: "arrow.left.circle.fill")
-                    .font(.title3)
-                    .padding(10)
-                    .background(.regularMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding()
+            VStack{
+                Spacer()
+                HStack{
+                    Spacer()
+                    Button {
+                        showGarden = false
+                    } label: {
+                        Label("Back", systemImage: "arrow.left.circle.fill")
+                            .font(.title3)
+                            .padding(10)
+                            .background(.regularMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding()
+                    }
+                }
             }
-            
+                
             // Plants
             if garden.plants.isEmpty {
-                ContentUnavailableView("No Plants", systemImage: "leaf")
+                ContentUnavailableView("No Plants, add some Flowers with the + in the left corner!" , systemImage: "leaf")
             } else {
                 ForEach(garden.plants) { plant in
                     PlantView(plant: plant) {

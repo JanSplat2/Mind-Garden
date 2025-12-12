@@ -5,11 +5,6 @@
 //  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
-//
-// ReflectionView.swift
-// Mind Garden
-//
-
 import SwiftUI
 import Charts
 

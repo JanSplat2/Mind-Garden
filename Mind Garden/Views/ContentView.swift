@@ -5,16 +5,13 @@
 //  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
-//
-// ContentView.swift
-// Mind Garden
-//
 
 import SwiftUI
 
 struct ContentView: View {
     
-    // MARK: - App State (iOS 17+ Observable System)
+    // MARK: - App State
+    
     @State private var garden = GardenManager()
     @State private var showEmotionPicker = false
     

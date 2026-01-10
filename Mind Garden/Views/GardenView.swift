@@ -6,24 +6,28 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GardenView: View {
     @Bindable var garden: GardenManager
     @Binding var showGarden: Bool
     
+    // Fetch live list of plants from SwiftData
+    @Query(sort: \Plant.lastWatered) private var plants: [Plant]
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             
-            // Background
+            // MARK: - Background
             LinearGradient(colors: [.green.opacity(0.4), .cyan.opacity(0.2)],
                            startPoint: .top,
                            endPoint: .bottom)
-            .ignoresSafeArea()
+                .ignoresSafeArea()
             
-            // Escape Button
-            VStack{
+            // MARK: - Escape Button
+            VStack {
                 Spacer()
-                HStack{
+                HStack {
                     Spacer()
                     Button {
                         showGarden = false
@@ -37,12 +41,14 @@ struct GardenView: View {
                     }
                 }
             }
-                
-            // Plants
-            if garden.plants.isEmpty {
-                ContentUnavailableView("No Plants, add some Flowers with the + in the left corner!" , systemImage: "leaf")
+            
+            // MARK: - Plants
+            if plants.isEmpty {
+                ContentUnavailableView("No Plants, add some Flowers with the + in the left corner!",
+                                       systemImage: "leaf")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                ForEach(garden.plants) { plant in
+                ForEach(plants) { plant in
                     PlantView(plant: plant) {
                         garden.water(plant)
                     }

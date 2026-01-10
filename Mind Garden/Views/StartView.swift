@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct StartView: View {
+    @Bindable var garden: GardenManager
     @Binding var showGarden: Bool
     @Binding var showReflection: Bool
+    
+    // Fetch plants to show a count or placeholder if needed
+    @Query(sort: \Plant.lastWatered) private var plants: [Plant]
     
     var body: some View {
         VStack(spacing: 40) {
@@ -58,8 +63,25 @@ struct StartView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
             }
             
+            // Reset ␥
+            Button {
+                garden.resetGarden()
+            } label: {
+                VStack {
+                    Image(systemName: "trash")
+                        .font(.system(size: 42))
+                    
+                    Text("Reset Garden")
+                        .font(.title3.bold())
+                }
+                .frame(width: 250, height: 120)
+                .background(.red.opacity(0.25))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+            
             Spacer()
         }
         .padding()
     }
 }
+

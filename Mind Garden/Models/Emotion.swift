@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum Emotion: String, CaseIterable, Identifiable, Hashable {
-    case joy, calm, love, sadness, anger, anxiety, gratitude
+    case joy, calm, love, sadness, anger, anxiety, gratitude, neutral
+    
     
     var id: String { rawValue }
     
@@ -21,6 +22,7 @@ enum Emotion: String, CaseIterable, Identifiable, Hashable {
         case .anger: return .red
         case .anxiety: return .purple
         case .gratitude: return .green
+        case .neutral: return .white
         }
     }
     
@@ -33,6 +35,7 @@ enum Emotion: String, CaseIterable, Identifiable, Hashable {
         case .anger: return "🔥"
         case .anxiety: return "🌪️"
         case .gratitude: return "🌻"
+        case .neutral: return " "
         }
     }
 }

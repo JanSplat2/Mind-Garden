@@ -1,32 +1,23 @@
 //
-//  Plant.swift
+//  Emotion.swift
 //  Mind Garden
 //
 //  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
-import SwiftUI
+import Foundation
 import SwiftData
 
 @Model
-class Plant {
+class EmotionEntry {
     @Attribute(.unique) var id: UUID
-    var emotionRaw: String
+    var date: Date
+    var emotionRaw: String	
 
-    var x: CGFloat
-    var y: CGFloat
-    var growth: Double
-    var stage: Int
-    var lastWatered: Date
-
-    init(emotion: Emotion) {
+    init(date: Date, emotion: Emotion) {
         self.id = UUID()
+        self.date = date
         self.emotionRaw = emotion.rawValue
-        self.x = 0
-        self.y = 0
-        self.growth = 0.0
-        self.stage = 1
-        self.lastWatered = Date()
     }
 
     var emotion: Emotion {

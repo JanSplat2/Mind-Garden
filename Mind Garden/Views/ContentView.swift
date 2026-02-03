@@ -5,52 +5,71 @@
 //  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
-
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     
     // MARK: - App State
-    
-    @State private var garden = GardenManager()
+    @Environment(\.modelContext) private var context
+    @State private var garden: GardenManager?
     @State private var showEmotionPicker = false
     
     @State private var showGarden = false
     @State private var showReflection = false
+    @State private var resetGarden = false
     
     var body: some View {
         NavigationStack {
             
-            // MARK: - GARDEN SCREEN
-            if showGarden {
-                NavigationSplitView {
-                    SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
-                } detail: {
-                    GardenView(garden: garden, showGarden: $showGarden)
-                }
-                .sheet(isPresented: $showEmotionPicker) {
-                    EmotionSelectorView(garden: garden,
-                                        showEmotionPicker: $showEmotionPicker)
-                    .frame(width: 450, height: 420)
-                }
-                .navigationTitle("Mind Garden 🌱")
-                
+            if let garden {
+                // MARK: - GARDEN SCREEN
+                if showGarden {
+                    NavigationSplitView {
+                        SidebarView(garden: garden, showEmotionPicker: $showEmotionPicker)
+                    } detail: {
+                        GardenView(garden: garden, showGarden: $showGarden)
+                    }
+                    .sheet(isPresented: $showEmotionPicker) {
+                        EmotionSelectorView(garden: garden,
+                                            showEmotionPicker: $showEmotionPicker)
+                        .frame(width: 450, height: 420)
+                    }
+                    .navigationTitle("Mind Garden 🌱")
+                    
                 // MARK: - REFLECTION SCREEN
-            } else if showReflection {
-                // pass a closure to set the flag back to false when user taps back
-                ReflectionView(garden: garden) {
-                    showReflection = false
-                }
-                .navigationTitle("Reflection ✨")
-                
+                } else if showReflection {
+                    ReflectionView(garden: garden) {
+                        showReflection = false
+                    }
+                    .navigationTitle("Reflection ✨")
+                    
                 // MARK: - START SCREEN
+                } else {
+                    StartView(garden: garden, showGarden: $showGarden,
+                              showReflection: $showReflection
+                              )
+                }
+                
             } else {
-                StartView(showGarden: $showGarden, showReflection: $showReflection)
+                // GardenManager not yet initialized
+                Color.clear
+                    .onAppear {
+                        garden = GardenManager(context: context)
+                    }
             }
         }
     }
 }
 
+// MARK: - Preview
 #Preview {
+    let container = try! ModelContainer(for: Plant.self, EmotionEntry.self)
+    let context = container.mainContext
     ContentView()
+        .environment(\.modelContext, context)
 }
+
+
+
+

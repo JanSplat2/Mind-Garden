@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Mind_GardenApp: App {
@@ -13,5 +14,7 @@ struct Mind_GardenApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [Plant.self, EmotionEntry.self])
     }
 }
+

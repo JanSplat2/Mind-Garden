@@ -2,7 +2,7 @@
 //  ReflectionView.swift
 //  Mind Garden
 //
-//  Created by Dittrich, Jan - Student on 11/11/25.
+//  Created by Dittrich, Jan - Student
 //
 
 import SwiftUI
@@ -12,26 +12,25 @@ import Charts
 struct ReflectionView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var garden: GardenManager
-    
     /// Optional closure the parent can pass to dismiss the reflection view
     var onDone: (() -> Void)? = nil
-    
+
     // MARK: - Fetch emotion history live from SwiftData
     @Query(sort: \EmotionEntry.date) private var emotionHistory: [EmotionEntry]
-    
+
     // MARK: - Chart data models
     struct DailyEmotionCount: Identifiable {
         let id = UUID()
         let date: Date
         let count: Int
     }
-    
+
     struct EmotionTypeCount: Identifiable {
         let id = UUID()
         let emotion: String
         let count: Int
     }
-    
+
     // MARK: - Process chart data
     private var emotionsPerDay: [DailyEmotionCount] {
         let grouped = Dictionary(grouping: emotionHistory) { entry in
@@ -42,7 +41,7 @@ struct ReflectionView: View {
         }
         .sorted { $0.date < $1.date }
     }
-    
+
     private var emotionTypeDistribution: [EmotionTypeCount] {
         let grouped = Dictionary(grouping: emotionHistory) { entry in
             entry.emotion.rawValue
@@ -52,7 +51,7 @@ struct ReflectionView: View {
         }
         .sorted { $0.emotion < $1.emotion }
     }
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -67,9 +66,8 @@ struct ReflectionView: View {
                     
                     // Chart 1 - Emotions per day
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("📅 Emotions Added Per Day")
+                        Text(" Emotions Added Per Day")
                             .font(.title2.bold())
-                        
                         Chart(emotionsPerDay) { entry in
                             LineMark(
                                 x: .value("Date", entry.date),
@@ -98,9 +96,8 @@ struct ReflectionView: View {
                     
                     // Chart 2 - Emotion type distribution
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("🌱 Emotion Type Distribution")
+                        Text(" Emotion Type Distribution")
                             .font(.title2.bold())
-                        
                         Chart(emotionTypeDistribution) { item in
                             BarMark(
                                 x: .value("Count", item.count),
@@ -116,11 +113,7 @@ struct ReflectionView: View {
                     
                     // Bottom Back / Done button
                     Button {
-                        if let done = onDone {
-                            done()
-                        } else {
-                            dismiss()
-                        }
+                        if let done = onDone { done() } else { dismiss() }
                     } label: {
                         Text("⬅️ Back to Start")
                             .font(.headline)
@@ -130,6 +123,7 @@ struct ReflectionView: View {
                             .cornerRadius(12)
                     }
                     .padding(.bottom, 40)
+                    
                 }
                 .padding(.horizontal)
             }
@@ -137,11 +131,7 @@ struct ReflectionView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        if let done = onDone {
-                            done()
-                        } else {
-                            dismiss()
-                        }
+                        if let done = onDone { done() } else { dismiss() }
                     } label: {
                         Label("Back", systemImage: "arrow.left")
                     }
@@ -150,4 +140,3 @@ struct ReflectionView: View {
         }
     }
 }
-

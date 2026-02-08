@@ -2,7 +2,7 @@
 //  Plant.swift
 //  Mind Garden
 //
-//  Created by Dittrich, Jan - Student on 11/11/25.
+//  Created by Dittrich, Jan - Student
 //
 
 import SwiftUI
@@ -12,12 +12,13 @@ import SwiftData
 class Plant {
     @Attribute(.unique) var id: UUID
     var emotionRaw: String
-
     var x: CGFloat
     var y: CGFloat
     var growth: Double
     var stage: Int
     var lastWatered: Date
+    var name: String
+    var text: String
 
     init(emotion: Emotion) {
         self.id = UUID()
@@ -27,6 +28,8 @@ class Plant {
         self.growth = 0.0
         self.stage = 1
         self.lastWatered = Date()
+        self.name = "unnamed"
+        self.text = ""
     }
 
     var emotion: Emotion {

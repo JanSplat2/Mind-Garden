@@ -1,8 +1,6 @@
 //
-//  Emotion.swift
+//  EmotionEntry.swift
 //  Mind Garden
-//
-//  Created by Dittrich, Jan - Student on 11/11/25.
 //
 
 import Foundation
@@ -12,7 +10,7 @@ import SwiftData
 class EmotionEntry {
     @Attribute(.unique) var id: UUID
     var date: Date
-    var emotionRaw: String	
+    var emotionRaw: String
 
     init(date: Date, emotion: Emotion) {
         self.id = UUID()

@@ -47,5 +47,16 @@ struct ContentView: View {
                 StartView(garden: garden, showGarden: $showGarden, showReflection: $showReflection)
             }
         }
+        .sheet(isPresented: $garden.shouldShowSupportSheet) {
+            SupportView(
+                message: garden.supportMessage ?? "Checking in...",
+                dismissAction: {
+                    garden.shouldShowSupportSheet = false
+                }
+            )
+        }
+        .sheet(isPresented: $garden.shouldShowAIChat) {
+            AIChatView()
+        }
     }
 }

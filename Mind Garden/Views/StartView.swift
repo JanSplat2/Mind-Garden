@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StartView: View {
-    @Bindable var garden: GardenManager
+    var garden: GardenManager
     @Binding var showGarden: Bool
     @Binding var showReflection: Bool
 

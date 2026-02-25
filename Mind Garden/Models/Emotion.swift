@@ -5,10 +5,18 @@
 
 import SwiftUI
 
-enum Emotion: String, CaseIterable, Identifiable {
-    case happy, sad, neutral, angry, excited, relaxed, anxious, loved, tired
-    var id: String { self.rawValue }
+enum EmotionType {
+    case positive
+    case neutral
+    case negative
+}
 
+enum Emotion: String, CaseIterable, Identifiable {
+    
+    case happy, sad, neutral, angry, excited, relaxed, anxious, loved, tired
+    
+    var id: String { rawValue }
+    
     var emoji: String {
         switch self {
         case .happy: return "😊"
@@ -22,7 +30,7 @@ enum Emotion: String, CaseIterable, Identifiable {
         case .tired: return "😴"
         }
     }
-
+    
     var color: Color {
         switch self {
         case .happy: return .yellow
@@ -34,6 +42,19 @@ enum Emotion: String, CaseIterable, Identifiable {
         case .anxious: return .purple
         case .loved: return .pink
         case .tired: return .brown
+        }
+    }
+    
+    var type: EmotionType {
+        switch self {
+        case .happy, .excited, .relaxed, .loved:
+            return .positive
+            
+        case .neutral:
+            return .neutral
+            
+        case .sad, .angry, .anxious, .tired:
+            return .negative
         }
     }
 }

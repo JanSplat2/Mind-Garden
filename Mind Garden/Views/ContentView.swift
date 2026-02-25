@@ -5,21 +5,21 @@
 
 import SwiftUI
 import SwiftData
+import Observation
 
 struct ContentView: View {
-
+    
     @Environment(\.modelContext) private var context
-    @Bindable var garden: GardenManager
-
+    @State private var garden: GardenManager
+    
     @State private var showEmotionPicker = false
     @State private var showGarden = false
     @State private var showReflection = false
-
+    
     init(context: ModelContext) {
-        let manager = GardenManager(context: context)
-        _garden = Bindable(wrappedValue: manager)
+        _garden = State(initialValue: GardenManager(context: context))
     }
-
+    
     var body: some View {
         NavigationStack {
             if showGarden {
@@ -41,22 +41,25 @@ struct ContentView: View {
                 }
                 .navigationTitle("Mind Garden 🌱")
             } else if showReflection {
-                ReflectionView(garden: garden) { showReflection = false }
-                    .navigationTitle("Reflection ✨")
+                ReflectionView(garden: garden) {
+                    showReflection = false
+                }
+                .navigationTitle("Reflection ✨")
             } else {
-                StartView(garden: garden, showGarden: $showGarden, showReflection: $showReflection)
+                StartView(
+                    garden: garden,
+                    showGarden: $showGarden,
+                    showReflection: $showReflection
+                )
             }
         }
-        .sheet(isPresented: $garden.shouldShowSupportSheet) {
+        .sheet(item: $garden.insight) { insight in
             SupportView(
-                message: garden.supportMessage ?? "Checking in...",
+                insight: insight,
                 dismissAction: {
-                    garden.shouldShowSupportSheet = false
+                    garden.insight = nil
                 }
             )
-        }
-        .sheet(isPresented: $garden.shouldShowAIChat) {
-            AIChatView()
         }
     }
 }

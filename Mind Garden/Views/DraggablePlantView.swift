@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct DraggablePlantView: View {
-    @Bindable var plant: Plant
+    var plant: Plant
     var allPlants: [Plant]
     var gardenSize: CGSize
     var onWater: () -> Void

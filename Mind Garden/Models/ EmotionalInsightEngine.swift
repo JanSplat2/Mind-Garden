@@ -31,18 +31,40 @@ struct EmotionalInsightEngine {
         
         // 1️⃣ Negative Streak Detection
         if hasNegativeStreak(emotions) {
-            return EmotionalInsight(
-                message: "I’ve noticed several difficult emotions in a row today. That can feel heavy.",
-                suggestion: "Would you like to pause for 60 seconds and take 5 slow breaths?"
-            )
+            print("Emotion now - \(String(describing: todayEntries.last?.emotion.type))")
+            if(todayEntries.last?.emotion.type == .positive) {
+                return EmotionalInsight(
+                    message: "This is getting better by the minute.",
+                    suggestion: "Keep on, this is the path to go"
+                )
+            } else if(todayEntries.last?.emotion.type == .neutral) {
+                return EmotionalInsight(
+                    message: "There will always be light at the end of a tunnel.",
+                    suggestion: "I know, the next thing will be super."
+                )
+            } else {
+                // 2️⃣ Majority Negative Today
+                if negativeCount >= 3 && negativeCount > positiveCount {
+                        return EmotionalInsight(
+                            message: "Today seems emotionally challenging overall.",
+                            suggestion: "Would reflecting on what triggered these feelings help?"
+                        )
+                } else {
+                    return EmotionalInsight(
+                        message: "I’ve noticed several difficult emotions in a row today. That can feel heavy.",
+                        suggestion: "Would you like to pause for 60 seconds and take 5 slow breaths?"
+                    )
+                }
+            }
+                
         }
         
         // 2️⃣ Majority Negative Today
         if negativeCount >= 3 && negativeCount > positiveCount {
-            return EmotionalInsight(
-                message: "Today seems emotionally challenging overall.",
-                suggestion: "Would reflecting on what triggered these feelings help?"
-            )
+                return EmotionalInsight(
+                    message: "Today seems emotionally challenging overall.",
+                    suggestion: "Would reflecting on what triggered these feelings help?"
+                )
         }
         
         // 3️⃣ Repeated Same Emotion

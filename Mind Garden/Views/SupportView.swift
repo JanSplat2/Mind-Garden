@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SupportView: View {
     
-    let message: String
+    let insight: EmotionalInsight
     let dismissAction: () -> Void
     
     var body: some View {
@@ -19,19 +19,20 @@ struct SupportView: View {
             Text("Hey 🌱")
                 .font(.largeTitle.bold())
             
-            Text(message)
+            Text(insight.message)
                 .multilineTextAlignment(.center)
-                .padding()
+            
+            if let suggestion = insight.suggestion {
+                Text(suggestion)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
             
             Button("I'm okay ❤️") {
                 dismissAction()
             }
             .buttonStyle(.borderedProminent)
-            
-            Button("I'd like to reflect ✨") {
-                dismissAction()
-            }
-            .buttonStyle(.bordered)
         }
         .padding()
         .frame(width: 420, height: 300)

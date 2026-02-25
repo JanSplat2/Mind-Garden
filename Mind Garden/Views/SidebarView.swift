@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @Bindable var garden: GardenManager
+    var garden: GardenManager
     @Binding var showEmotionPicker: Bool
     
     var body: some View {
@@ -14,10 +14,6 @@ struct SidebarView: View {
             
             Button(action: { showEmotionPicker = true }) {
                 Label("Add Plant", systemImage: "plus.circle")
-            }
-            
-            Button(action: { garden.openAIChat() }) {
-                Label("Talk to AI", systemImage: "message.circle")
             }
             
             Button(action: { garden.resetGarden() }) {

@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct EmotionSelectorView: View {
-    @Bindable var garden: GardenManager
+    var garden: GardenManager
     @Binding var showEmotionPicker: Bool
     var gardenSize: CGSize
     var existingPlants: [Plant] = []

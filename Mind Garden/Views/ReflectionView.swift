@@ -11,7 +11,7 @@ import Charts
 
 struct ReflectionView: View {
     @Environment(\.dismiss) private var dismiss
-    @Bindable var garden: GardenManager
+    var garden: GardenManager
     /// Optional closure the parent can pass to dismiss the reflection view
     var onDone: (() -> Void)? = nil
 

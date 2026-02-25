@@ -7,10 +7,10 @@ import SwiftUI
 import SwiftData
 
 struct GardenView: View {
-    @Bindable var garden: GardenManager
+    var garden: GardenManager
     @Binding var showGarden: Bool
     @Query(sort: \Plant.lastWatered) private var plants: [Plant]
-
+    
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
